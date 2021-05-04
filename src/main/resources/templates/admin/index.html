@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head th:replace="admin/_fragments :: head">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Blog backend</title>
@@ -19,12 +19,12 @@
                     <div class="right m-item m-mobile-hide menu">
                         <div class="ui dropdown item">
                             <div class="text">
-                                <img src="../../static/images/photo.jpg" alt="" class="ui avatar image">
+                                <img src="../../static/images/photo.jpg" th:src="@{/images/photo.jpg}" alt="" class="ui avatar image">
                                 Siyuan Yu
                             </div>
                             <i class="dropdown icon"></i>   
                             <div class="menu">
-                                <a href="#" class="item">log out</a>
+                                <a href="#" th:href="@{/admin/logout}" class="item">log out</a>
                             </div>
                         </div>
                     </div>
@@ -34,84 +34,19 @@
                 <i class="sidebar icon"></i>
             </a>
         </nav>
-        <div class="ui attached pointing menu">
-            <div class="ui container">
-                <div class="right menu">
-                    <a href="#" class="item">Publish</a>
-                    <a href="#" class="teal active item">List</a>
-                </div>
-                
-            </div>
 
-        </div>
 
         <!--content-->
         <div class="m-container-small m-padded-tb-big">
             <div class="ui container">
-                <form action="#" method="POST" class="ui segment form">
-                    <div class=" inline fields">
-                        <div class="field">
-                            <input type="text" name="title" placeholder="topic">
-                        </div>
-                        <div class="field">
-                            <div class="ui selection dropdown">
-                                <input type="hidden" name="type">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">category</div>
-                                <div class="menu">
-                                    <div class="item" data-value="1">category1</div>
-                                    <div class="item" data-value="2">category2</div>
-                                    <div class="item" data-value="3">category3</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" id="recommend" name="recommend">
-                                <label for="recommend">Recommendation</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <button class="ui mini teal basic button"><i class="search icon"></i>Search</button>
-                        </div>
-                    </div>
-                </form>
-                <table class="ui table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Topic</th>
-                            <th>Type</th>
-                            <th>Recommendation</th>
-                            <th>Date</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Topic1</td>
-                            <td>Type1</td>
-                            <td>Yes</td>
-                            <td>2021-04-06 21:11</td>
-                            <td>
-                                <a href="#" class="ui mini teal basic button">Edit</a>
-                                <a href="#" class="ui mini red basic button">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="6">
-                                <div class="ui pagination menu">
-                                    <a class="item">Previous</a>
-                                    <a class="item">Next</a>                                   
-                                </div>
-                                <a href="#" class="ui teal mini right floated teal basic button">Add new</a>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
+                <div class="ui success large message">
+                    <h3>Hi</h3>
+                    <p>Siyuan, Welcome!</p>
+                </div>
+                <div class="image">
+                    <img src="../../static/images/naonao.jpg" th:src="@{/images/naonao.jpg}" class="ui rounded bordered fluid image" style="max-width: 1000px; max-height: 600px" >
+                </div>
+
             </div>
         </div>
 
@@ -120,7 +55,7 @@
             <div class="ui center aligned container">
                 <div class="ui inverted divided  stackable grid">
                     <div class="three wide column">
-                        <img src="../../static/images/wechat.jpg" class="ui centered rounded image" alt="" style="width: 120px;">
+                        <img src="../../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui centered rounded image" alt="" style="width: 120px;">
                     </div>
                     <div class="four wide column">
                         <h4 class="ui inverted header m-text-thin m-text-spaced">The latest Blog</h4>
