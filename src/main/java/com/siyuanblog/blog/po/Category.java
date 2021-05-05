@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="t_type")
-public class Type {
+@Table(name="t_category")
+public class Category {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "category")
     private List<Blog> blogs = new ArrayList<>();
 
-    public Type() {
+    public Category() {
 
     }
 
@@ -45,7 +45,7 @@ public class Type {
 
     @Override
     public String toString() {
-        return "Type{" +
+        return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

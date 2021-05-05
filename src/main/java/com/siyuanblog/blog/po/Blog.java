@@ -28,7 +28,7 @@ public class Blog {
     private Date updateTime;
 
     @ManyToOne
-    private Type type;
+    private Category category;
 
     @ManyToMany(cascade = {CascadeType.PERSIST})
     private List<Tag> tags = new ArrayList<>();
@@ -147,12 +147,12 @@ public class Blog {
         this.updateTime = updateTime;
     }
 
-    public Type getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public List<Tag> getTags() {
