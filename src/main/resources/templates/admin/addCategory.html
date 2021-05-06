@@ -3,9 +3,12 @@
     <head th:replace="admin/_fragments :: head">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Blog backend management</title>
+        <title>Add Category</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
         <link rel="stylesheet" href="../../static/css/me.css">
+        
+  />
     </head>
     <body>
         <!--navigation-->
@@ -13,9 +16,9 @@
             <div class="ui container">
                 <div class="ui inverted secondary stackable menu">
                     <h2 class="ui teal header item">Blog management</h2>
-                    <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i>Blog</a>
-                    <a href="#" th:href="@{/admin/category}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Category</a>
-                    <a href="#" th:href="@{/admin/tag}"  class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
+                    <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>Blog</a>
+                    <a href="#" class="active m-item item m-mobile-hide"><i class="idea icon"></i>Category</a>
+                    <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
                     <div class="right m-item m-mobile-hide menu">
                         <div class="ui dropdown item">
                             <div class="text">
@@ -37,8 +40,8 @@
         <div class="ui attached pointing menu">
             <div class="ui container">
                 <div class="right menu">
-                    <a href="#" class="item">Publish</a>
-                    <a href="#" class="teal active item">List</a>
+                    <a href="#" th:href="@{/admin/category/input}" class="active item">Add</a>
+                    <a href="#" th:href="@{/admin/category}" class="teal item">List</a>
                 </div>
                 
             </div>
@@ -48,72 +51,43 @@
         <!--content-->
         <div class="m-container-small m-padded-tb-big">
             <div class="ui container">
-                <form action="#" method="POST" class="ui segment form">
-                    <div class=" inline fields">
-                        <div class="field">
-                            <input type="text" name="title" placeholder="topic">
-                        </div>
-                        <div class="field">
-                            <div class="ui selection dropdown">
-                                <input type="hidden" name="type">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">category</div>
-                                <div class="menu">
-                                    <div class="item" data-value="1">category1</div>
-                                    <div class="item" data-value="2">category2</div>
-                                    <div class="item" data-value="3">category3</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" id="recommend" name="recommend">
-                                <label for="recommend">Recommendation</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <button class="ui mini teal basic button"><i class="search icon"></i>Search</button>
-                        </div>
+                <form action="#" method="POST"
+                      th:object="${category}" th:action="*{id}==null ? @{/admin/category} : @{/admin/category/{id}(id=*{id})}" class="ui form">
+                    <input type="hidden" name="id" th:value="*{id}">
+                    <div class=" required field">
+                        <dvi class="ui left labeled input">
+                            <label class="ui teal basic label">Category</label>
+                            <input type="text" name="name" placeholder="category" th:value="*{name}">
+                        </dvi>
+                    </div>
+
+                    <div class="ui error message"></div>
+                    <!----thymeleaf can parse it------>
+
+                    <!--/*/
+                    <div class="ui negative large message" th:if="${#fields.hasErrors('name')}">
+                        <i class="close icon"></i>
+                        <p th:errors="*{name}"></p>
+                    </div>
+                    /*/-->
+                    <div class="ui right aligned container">
+                        <button type="button" class="ui button" onclick="window.history.go(-1)">Back</button>
+                        <button class="ui teal submit button">submit</button>
                     </div>
                 </form>
-                <table class="ui table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Topic</th>
-                            <th>Type</th>
-                            <th>Recommendation</th>
-                            <th>Date</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Topic1</td>
-                            <td>Type1</td>
-                            <td>Yes</td>
-                            <td>2021-04-06 21:11</td>
-                            <td>
-                                <a href="#" class="ui mini teal basic button">Edit</a>
-                                <a href="#" class="ui mini red basic button">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="6">
-                                <div class="ui pagination menu">
-                                    <a class="item">Previous</a>
-                                    <a class="item">Next</a>                                   
-                                </div>
-                                <a href="#" class="ui teal mini right floated teal basic button">Add new</a>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
 
         <!--footer-->
         <footer class="ui inverted vertical segment m-padded-tb-massive">
@@ -149,12 +123,29 @@
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="../../static/lib/editormd/editormd.min.js"></script>
+        <script src="../../static/lib/editormd/languages/en.js"></script>
 
         <script>
             $('.menu.toggle').click(function() {
                 $('.m-item').toggleClass('m-mobile-hide');
             });
-            $('.ui.dropdown').dropdown();
+            $('.ui.dropdown').dropdown({
+                on : 'hover'
+            });
+
+            $('.ui.form').form({
+                fields: {
+                    title: {
+                        identifier: 'name',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter a category name'
+                        }]
+                    }
+                }
+            });
+
         </script>
     </body>
 </html>

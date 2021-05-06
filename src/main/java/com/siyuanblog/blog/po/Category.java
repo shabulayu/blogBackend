@@ -1,6 +1,7 @@
 package com.siyuanblog.blog.po;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Category {
     @Id
     @GeneratedValue
     private Long id;
+    @NotBlank(message = "name cannot be blank")
     private String name;
 
     @OneToMany(mappedBy = "category")
