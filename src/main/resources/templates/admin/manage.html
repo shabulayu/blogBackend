@@ -19,8 +19,8 @@
                     <div class="right m-item m-mobile-hide menu">
                         <div class="ui dropdown item">
                             <div class="text">
-                                <img src="../../static/images/photo.jpg" th:src="@{/images/photo.jpg}" alt="" class="ui avatar image">
-                                Siyuan Yu
+                                <img src="../../static/images/photo.jpg" alt="" class="ui avatar image" th:src="@{${session.user.avatar}}">
+                                <span th:text="${session.user.nickname}">Siyuan</span>
                             </div>
                             <i class="dropdown icon"></i>   
                             <div class="menu">
@@ -48,20 +48,19 @@
         <!--content-->
         <div class="m-container-small m-padded-tb-big">
             <div class="ui container">
-                <form action="#" method="POST" class="ui segment form">
+                <div class="ui secondary segment form">
+                    <input type="hidden" name="page">
                     <div class=" inline fields">
                         <div class="field">
                             <input type="text" name="title" placeholder="topic">
                         </div>
                         <div class="field">
                             <div class="ui selection dropdown">
-                                <input type="hidden" name="type">
+                                <input type="hidden" name="categoryId">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">category</div>
                                 <div class="menu">
-                                    <div class="item" data-value="1">category1</div>
-                                    <div class="item" data-value="2">category2</div>
-                                    <div class="item" data-value="3">category3</div>
+                                    <div th:each="category : ${category}" class="item" data-value="1" th:data-value="${category.id}" th:text="${category.name}">category1</div>
                                 </div>
                             </div>
                         </div>
@@ -72,46 +71,50 @@
                             </div>
                         </div>
                         <div class="field">
-                            <button class="ui mini teal basic button"><i class="search icon"></i>Search</button>
+                            <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>Search</button>
                         </div>
                     </div>
-                </form>
-                <table class="ui table">
-                    <thead>
+                </div>
+                <div id="table-container">
+                    <table th:fragment="blogList" class="ui compact table">
+                        <thead>
                         <tr>
                             <th></th>
                             <th>Topic</th>
-                            <th>Type</th>
+                            <th>Category</th>
                             <th>Recommendation</th>
                             <th>Date</th>
                             <th>Operation</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Topic1</td>
-                            <td>Type1</td>
-                            <td>Yes</td>
-                            <td>2021-04-06 21:11</td>
+                        </thead>
+                        <tbody>
+                        <tr th:each="blog, iterStat : ${page.content}">
+                            <td th:text="${iterStat.count}">1</td>
+                            <td th:text="${blog.title}"></td>
+                            <td th:text="${blog.category.name}"></td>
+                            <td th:text="${blog.recommend} ? 'YES':'NO'"></td>
+                            <td th:text="${blog.updateTime}"></td>
                             <td>
-                                <a href="#" class="ui mini teal basic button">Edit</a>
-                                <a href="#" class="ui mini red basic button">Delete</a>
+                                <a href="#" th:href="@{/admin/manage/{id}/input(id=${blog.id})}" class="ui mini teal basic button">Edit</a>
+                                <a href="#" th:href="@{/admin/manage/{id}/delete(id=${blog.id})}" class="ui mini red basic button">Delete</a>
                             </td>
                         </tr>
-                    </tbody>
-                    <tfoot>
+                        </tbody>
+                        <tfoot>
                         <tr>
                             <th colspan="6">
-                                <div class="ui pagination menu">
-                                    <a class="item">Previous</a>
-                                    <a class="item">Next</a>                                   
+                                <div class="ui pagination menu" th:if="${page.totalPages}>1">
+                                    <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Previous</a>
+                                    <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
                                 </div>
-                                <a href="#" class="ui teal mini right floated teal basic button">Add new</a>
+                                <a href="#" th:href="@{/admin/tag/input}" class="ui teal mini right floated teal basic button">Add new</a>
+                            </th>
                             </th>
                         </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
+                </div>
+
             </div>
         </div>
 
@@ -155,6 +158,24 @@
                 $('.m-item').toggleClass('m-mobile-hide');
             });
             $('.ui.dropdown').dropdown();
+
+            function page(obj){
+                $("[name='page']").val($(obj).data("page"));
+                loadData();
+            }
+
+            $("search-btn").click(function (){
+                loadData();
+            });
+
+            function loadData() {
+                $("#table-container").load(/*[[@{/admin/manage/search}]]*/"/admin/manage/search",{
+                    title : $("[name='title']").val(),
+                    categoryId : $("[name='categoryId']").val(),
+                    recommend : $("[name='recommend']").prop('checked'),
+                    page : $("[name='page']").val()
+                });
+            }
         </script>
     </body>
 </html>

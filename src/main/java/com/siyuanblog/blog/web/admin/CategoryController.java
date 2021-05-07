@@ -58,9 +58,9 @@ public class CategoryController {
         }
         Category c = categoryService.saveCategory(category);
         if (c == null) {
-            attributes.addFlashAttribute("message", "Add new failed");
+            attributes.addFlashAttribute("message", "Add new category failed");
         }else {
-            attributes.addFlashAttribute("message", "Add new successful");
+            attributes.addFlashAttribute("message", "Add new category successful");
         }
         return "redirect:/admin/category";
     }
@@ -77,9 +77,9 @@ public class CategoryController {
         }
         Category c = categoryService.updateCategory(id, category);
         if (c == null) {
-            attributes.addFlashAttribute("message", "Update failed");
+            attributes.addFlashAttribute("message", "Update category failed");
         }else {
-            attributes.addFlashAttribute("message", "Update successful");
+            attributes.addFlashAttribute("message", "Update category successful");
         }
         return "redirect:/admin/category";
     }
@@ -87,7 +87,7 @@ public class CategoryController {
     @GetMapping("category/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes attributes){
         categoryService.deleteCategory(id);
-        attributes.addFlashAttribute("message", "Delete successful");
+        attributes.addFlashAttribute("message", "Delete category successful");
         return "redirect:/admin/category";
     }
 }
