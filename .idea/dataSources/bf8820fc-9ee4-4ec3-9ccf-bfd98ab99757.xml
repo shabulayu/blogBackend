@@ -1057,7 +1057,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </column>
     <column id="299" parent="289" name="content">
       <Position>4</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>longtext|0s</DataType>
     </column>
     <column id="300" parent="289" name="create_time">
       <Position>5</Position>

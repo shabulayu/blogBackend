@@ -37,8 +37,8 @@
         <div class="ui attached pointing menu">
             <div class="ui container">
                 <div class="right menu">
-                    <a href="#" class="item">Publish</a>
-                    <a href="#" class="teal active item">List</a>
+                    <a href="#" th:href="@{/admin/manage/publish}" class="item">Publish</a>
+                    <a href="#" th:href="@{/admin/manage}" class="teal active item">List</a>
                 </div>
                 
             </div>
@@ -55,6 +55,9 @@
                             <input type="text" name="title" placeholder="topic">
                         </div>
                         <div class="field">
+                            <div>
+
+                            </div>
                             <div class="ui selection dropdown">
                                 <input type="hidden" name="categoryId">
                                 <i class="dropdown icon"></i>
@@ -83,6 +86,7 @@
                             <th>Topic</th>
                             <th>Category</th>
                             <th>Recommendation</th>
+                            <th>Published</th>
                             <th>Date</th>
                             <th>Operation</th>
                         </tr>
@@ -93,26 +97,32 @@
                             <td th:text="${blog.title}"></td>
                             <td th:text="${blog.category.name}"></td>
                             <td th:text="${blog.recommend} ? 'YES':'NO'"></td>
+                            <td th:text="${blog.published} ? 'Published':'Draft'"></td>
                             <td th:text="${blog.updateTime}"></td>
                             <td>
-                                <a href="#" th:href="@{/admin/manage/{id}/input(id=${blog.id})}" class="ui mini teal basic button">Edit</a>
+                                <a href="#" th:href="@{/admin/manage/{id}/edit(id=${blog.id})}" class="ui mini teal basic button">Edit</a>
                                 <a href="#" th:href="@{/admin/manage/{id}/delete(id=${blog.id})}" class="ui mini red basic button">Delete</a>
                             </td>
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th colspan="6">
+                            <th colspan="7">
                                 <div class="ui pagination menu" th:if="${page.totalPages}>1">
                                     <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Previous</a>
                                     <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
                                 </div>
-                                <a href="#" th:href="@{/admin/tag/input}" class="ui teal mini right floated teal basic button">Add new</a>
+                                <a href="#" th:href="@{/admin/manage/publish}" class="ui teal mini right floated teal basic button">Add new</a>
                             </th>
                             </th>
                         </tr>
                         </tfoot>
                     </table>
+
+                    <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                        <i class="close icon"></i>
+                        <p th:text="${message}">Operation is successful</p>
+                    </div>
                 </div>
 
             </div>
@@ -159,12 +169,20 @@
             });
             $('.ui.dropdown').dropdown();
 
+            $('.message .close')
+                .on('click', function (){
+                    $(this)
+                        .closest('.message')
+                        .transition('fade');
+                });
+
             function page(obj){
                 $("[name='page']").val($(obj).data("page"));
                 loadData();
             }
 
-            $("search-btn").click(function (){
+            $("#search-btn").click(function (){
+                $("[name='page']").val(0);
                 loadData();
             });
 
