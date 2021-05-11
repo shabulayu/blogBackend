@@ -19,6 +19,9 @@ public interface CategoryService {
     Page<Category> listCategory(Pageable pageable);
 
     List<Category> listCategory();
+
+    List<Category> listCategoryTop(Integer size);
+
     Category updateCategory(Long id, Category category) throws NotFoundException;
 
     void deleteCategory(Long id);

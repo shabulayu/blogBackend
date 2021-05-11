@@ -6,6 +6,7 @@ import com.siyuanblog.blog.service.BlogService;
 import com.siyuanblog.blog.service.CategoryService;
 import com.siyuanblog.blog.service.TagService;
 import com.siyuanblog.blog.vo.BlogQuery;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -67,11 +68,17 @@ public class BlogController {
     }
 
     @PostMapping("/manage")
-    public String post(Blog blog, RedirectAttributes attributes, HttpSession session){
+    public String post(Blog blog, RedirectAttributes attributes, HttpSession session) throws NotFoundException {
         blog.setUser((User)session.getAttribute("user"));
         blog.setCategory(categoryService.getCategory(blog.getCategory().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
-        Blog b = blogService.saveBlog(blog);
+        Blog b;
+        if(blog.getId() == null){
+            b = blogService.saveBlog(blog);
+        }else {
+            b = blogService.updateBlog(blog.getId(), blog);
+        }
+
         if (b == null) {
             attributes.addFlashAttribute("message", "Operation is failed");
         }else {
