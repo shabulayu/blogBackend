@@ -82,6 +82,11 @@ public class BlogServiceImpl implements BlogService{
         return blogRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<Blog> listBlog(String query, Pageable pageable) {
+        return blogRepository.findByQuery(query, pageable);
+    }
+
     @Transactional
     @Override
     public Blog updateBlog(Long id, Blog blog) throws NotFoundException {
