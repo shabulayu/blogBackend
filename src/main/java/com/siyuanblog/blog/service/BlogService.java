@@ -13,6 +13,8 @@ public interface BlogService {
 
     Blog getBlog(Long id);
 
+    Blog getAndConvert(Long id) throws NotFoundException;
+
     Blog saveBlog(Blog blog);
 
     Page<Blog> listBlog(Pageable pageable, BlogQuery blog);

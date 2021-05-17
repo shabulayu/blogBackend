@@ -129,5 +129,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.6" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.commonmark:commonmark:0.17.1" level="project" />
+    <orderEntry type="library" name="Maven: org.commonmark:commonmark-ext-gfm-tables:0.17.1" level="project" />
+    <orderEntry type="library" name="Maven: org.commonmark:commonmark-ext-heading-anchor:0.17.1" level="project" />
   </component>
 </module>

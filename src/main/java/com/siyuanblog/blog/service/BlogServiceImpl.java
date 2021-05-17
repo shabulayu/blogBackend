@@ -3,6 +3,7 @@ package com.siyuanblog.blog.service;
 import com.siyuanblog.blog.dao.BlogRepository;
 import com.siyuanblog.blog.po.Blog;
 import com.siyuanblog.blog.po.Category;
+import com.siyuanblog.blog.util.MarkdownUtils;
 import com.siyuanblog.blog.util.MyBeanUtils;
 import com.siyuanblog.blog.vo.BlogQuery;
 import javassist.NotFoundException;
@@ -33,6 +34,22 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public Blog getBlog(Long id) {
         return blogRepository.getOne(id);
+    }
+
+    @Transactional
+    @Override
+    public Blog getAndConvert(Long id) throws NotFoundException {
+        Blog blog = blogRepository.getOne(id);
+        if (blog == null){
+            throw new NotFoundException("This blog does not exist");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog, b);
+        String content =b.getContent();
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+
+        blogRepository.updateViews(id);
+        return b;
     }
 
     @Transactional

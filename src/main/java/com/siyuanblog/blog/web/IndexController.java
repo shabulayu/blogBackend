@@ -4,6 +4,7 @@ import com.siyuanblog.blog.service.BlogService;
 import com.siyuanblog.blog.service.CategoryService;
 import com.siyuanblog.blog.service.TagService;
 import com.siyuanblog.blog.vo.BlogQuery;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -45,10 +46,9 @@ public class IndexController {
         return "search";
     }
 
-    @GetMapping("/blog")
-    public String blog(){
-
-        System.out.println("---------blog-----------");
+    @GetMapping("/blog/{id}")
+    public String blog(@PathVariable Long id, Model model) throws NotFoundException {
+        model.addAttribute("blog", blogService.getAndConvert(id));
         return "blog";
     }
     @GetMapping("/archive")
