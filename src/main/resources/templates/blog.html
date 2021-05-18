@@ -20,8 +20,7 @@
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
                 <a href="index.html" th:href="@{/}" class="m-item item m-mobile-hide"><i class="home icon"></i>Main page</a>
-                <a href="category.html" th:href="@{/category}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Category</a>
-                <a href="tag.html" th:href="@{/tag}" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
+                <a href="category.html" th:href="@{/category/-1}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Category</a>
                 <a href="about.html" th:href="@{/about}" class="m-item item m-mobile-hide"><i class="info icon"></i>About me</a>
                 <div class="right m-item item m-mobile-hide">
                     <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
@@ -229,16 +228,18 @@ class Solution {
     <footer class="ui inverted vertical segment m-padded-tb-massive">
         <div class="ui center aligned container">
             <div class="ui inverted divided  stackable grid">
-                <div class="three wide column">
-                    <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui centered rounded image" alt=""
-                        style="width: 120px;">
+                <div class="two wide column">
+                    <img src="../static/images/linkedin.png" th:src="@{/images/linkedin.png}" class="ui centered rounded image" alt="" style="width: 120px;">
                 </div>
-                <div class="four wide column">
+                <div class="two wide column">
+                    <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui centered rounded image" alt="" style="width: 120px;">
+                </div>
+                <div class="three wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">The latest Blog</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">1</a>
-                        <a href="#" class="item">2</a>
-                        <a href="#" class="item">3</a>
+                    <div id="newBlog-container">
+                        <div class="ui inverted link list" th:fragment="newBlogList">
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" class="item" th:each="blog : ${newBlogs}" th:text="${blog.title}">1</a>
+                        </div>
                     </div>
                 </div>
                 <div class="four wide column">
@@ -282,6 +283,10 @@ class Solution {
 
     <script src="../static/lib/prism/prism.js" type="text/javascript" th:src="@{/lib/prism/prism.js}"></script>
     <script src="../static/lib/toc/tocbot.min.js" type="text/javascript" th:src="@{/lib/toc/tocbot.min.js}"></script>
+
+    <script>
+        $('#newBlog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
 
 
     <script th:inline="javascript">

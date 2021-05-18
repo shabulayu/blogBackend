@@ -51,28 +51,10 @@ public class IndexController {
         model.addAttribute("blog", blogService.getAndConvert(id));
         return "blog";
     }
-    @GetMapping("/archive")
-    public String archive(){
 
-        System.out.println("---------archive-----------");
-        return "archive";
-    }
-    @GetMapping("/about")
-    public String about(){
-
-        System.out.println("---------about-----------");
-        return "about";
-    }
-    @GetMapping("/category")
-    public String category(){
-
-        System.out.println("---------category-----------");
-        return "category";
-    }
-    @GetMapping("/tag")
-    public String tag(){
-
-        System.out.println("---------tag-----------");
-        return "tag";
+    @GetMapping("/footer/newblog")
+    public String newBlogs(Model model){
+        model.addAttribute("newblogs", blogService.listRecommendBlogTop(3));
+        return "_fragments :: newBlogList";
     }
 }
